@@ -1,18 +1,18 @@
 /*
-  The MIT License (MIT) 
+  The MIT License (MIT)
   Copyright (C) 2010-2013 Jeroen Frijters
   Copyright (C) 2011 Marek Safar
-  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-  
+
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-  
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -243,6 +243,11 @@ namespace Managed.Reflection
                         result = partial ? AssemblyComparisonResult.EquivalentPartialUnified : AssemblyComparisonResult.EquivalentUnified;
                         return true;
                     }
+                    else if (name1.Version == "0.0.0.0" || name1.Version == name2.Version)
+                    {
+                        result = AssemblyComparisonResult.EquivalentFullMatch;
+                        return true;
+                    }
                     else
                     {
                         result = partial ? AssemblyComparisonResult.NonEquivalentPartialVersion : AssemblyComparisonResult.NonEquivalentVersion;
@@ -254,6 +259,11 @@ namespace Managed.Reflection
                     if (unified1)
                     {
                         result = partial ? AssemblyComparisonResult.EquivalentPartialUnified : AssemblyComparisonResult.EquivalentUnified;
+                        return true;
+                    }
+                    else if (name2.Version == "0.0.0.0" || name1.Version == name2.Version)
+                    {
+                        result = AssemblyComparisonResult.EquivalentFullMatch;
                         return true;
                     }
                     else
